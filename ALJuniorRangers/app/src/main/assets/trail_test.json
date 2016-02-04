@@ -1,0 +1,36 @@
+{
+  "name":"test trail",
+  "map": {
+    "name":"testimage.jpg",
+    "topLeft":{
+      "latitude":"35",
+      "longitude":"-85"
+    },
+    "bottomRight": {
+      "latitude":"30",
+      "longitude":"-80"
+    }
+  },
+  "waypoints":[
+    {
+      "latitude":"30",
+      "longitude":"-83"
+    },
+    {
+      "latitude":"31",
+      "longitude":"-83"
+    },
+    {
+      "latitude":"32",
+      "longitude":"-82"
+    },
+    {
+      "latitude":"33",
+      "longitude":"-83"
+    },
+    {
+      "latitude":"32",
+      "longitude":"-84"
+    }
+  ]
+}
