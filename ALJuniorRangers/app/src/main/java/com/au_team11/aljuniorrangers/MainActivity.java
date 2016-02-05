@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
         if (savedInstanceState == null) {
             trailWalkFragment = new TrailWalkFragment();
             Bundle arguments = new Bundle();
-            arguments.putString(getResources().getString(R.string.assetBundleKey), "trail_test.json");
+            arguments.putString(getResources().getString(R.string.assetBundleKey), "trail_test_2.json");
             trailWalkFragment.setArguments(arguments);
             //put the fragment on the screen
             fragmentManager.beginTransaction().add(R.id.activity_main, trailWalkFragment).commit();

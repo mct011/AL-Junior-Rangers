@@ -133,7 +133,7 @@ public class TrailWalkFragment extends Fragment {
 
             //TODO: prevent from recreating the bitmap if the previous one is still in memory
             BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 4;
+            options.inSampleSize = 2;
             map = BitmapFactory.decodeStream(
                                     getResources().getAssets().open(jsonObject.getJSONObject("map").getString("name")),
                                     null,
