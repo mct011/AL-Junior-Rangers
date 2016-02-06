@@ -1,0 +1,15 @@
+{
+  "name":"Chewacla",
+  "activities":[
+      {
+        "activityName":"Trail Walk",
+        "filename":"trail_test_2.json",
+        "type":"trailwalk"
+      },
+      {
+        "activityName":"Word Search",
+        "filename":"wordsearch_test.json",
+        "type":"wordsearch"
+      }
+  ]
+}

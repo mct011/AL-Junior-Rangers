@@ -1,5 +1,6 @@
 package com.au_team11.aljuniorrangers;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -39,12 +40,17 @@ public class ParkFragment extends Fragment {
     String selectedActivity;
     JSONArray activitiesPopulation;
 
+    //listener
+    ParkActivityListener mCallback;
+
     public ParkFragment() {
 
     }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //initialize listener
+        mCallback = (ParkActivityListener) this.getActivity();
     }
 
     @Override
@@ -55,7 +61,7 @@ public class ParkFragment extends Fragment {
         Log.i("ParkFragment", "onCreateView");
         View view = inflater.inflate(R.layout.park_layout, container, false);
 
-        String parkActivities = getArguments().getString("ParkActivitiesString");
+        String parkActivities = getArguments().getString("activities");
         //TODO Do we really need this? Discuss what exactly will be passed between fragments, through bundle or intent. If bundles why not just use a JSONobject.toString and then delimit the string for the activities.
 
 
@@ -152,11 +158,14 @@ public class ParkFragment extends Fragment {
 
     public void returnFilename(String activityName){
         String filename = "";
+        //also need activity type
+        String type = "";
         //parse JSONArray for activityname specified by spinner. Then get correct filename.
         try {
             for (int i = 0; i < activitiesPopulation.length(); i++) {
                 if (activityName.equals(activitiesPopulation.getJSONObject(i).getString("activityName"))) {
                     filename = activitiesPopulation.getJSONObject(i).getString("filename");
+                    type = activitiesPopulation.getJSONObject(i).getString("type");
                 }
             }
         }
@@ -167,9 +176,14 @@ public class ParkFragment extends Fragment {
             //DO Some Error Reporting
         }
 
+        /*
         //Package the filename in an intent and send to Main
         Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
         intent.putExtra("toOpen", filename);
         getActivity().startActivity(intent);
+        */
+
+        //send the filename through a callback method
+        mCallback.onParkActivitySelectedListener(filename, type);
     }
 }
