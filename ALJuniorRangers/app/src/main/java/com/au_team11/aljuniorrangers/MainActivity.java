@@ -5,6 +5,8 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 
+//testing the ability of branching and merging
+
 public class MainActivity extends Activity implements ParkActivityListener {
 
     TrailWalkFragment trailWalkFragment = null;
