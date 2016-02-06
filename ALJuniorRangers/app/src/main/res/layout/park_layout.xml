@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/ParkName"
+        android:text="Chewacla!"
+        android:textSize="32dp"
+        android:layout_weight="50"
+        android:gravity="center_vertical|center_horizontal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Please Select Your Activity"
+        android:id="@+id/ActivitySelectorText"
+        android:layout_weight="20"
+        android:textSize="24dp"
+        android:gravity="center_vertical|center_horizontal" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/spinner"
+        android:layout_weight="15">
+    </Spinner>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Go!"
+        android:id="@+id/button"
+        android:layout_weight="15"
+        android:enabled="true"
+        android:textSize="24dp" />
+
+</LinearLayout>

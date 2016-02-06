@@ -1,5 +1,6 @@
 package com.au_team11.aljuniorrangers;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -26,6 +27,8 @@ import java.util.ArrayList;
  */
 public class TrailWalkFragment extends Fragment {
 
+    Activity mCallback;
+
     TrailWalk trailWalk;
 
     View view;
@@ -33,6 +36,17 @@ public class TrailWalkFragment extends Fragment {
     TrailWalkView trailWalkView;
 
     public TrailWalkFragment() {
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            mCallback = (Activity) activity;
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -175,4 +189,6 @@ public class TrailWalkFragment extends Fragment {
         }
         return json;
     }
+
+
 }
