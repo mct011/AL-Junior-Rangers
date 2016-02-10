@@ -5,7 +5,7 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 
-//testing the ability of branching and merging
+//testing the ability of branching and merging - Nick Openshaw
 
 public class MainActivity extends Activity implements ParkActivityListener {
 
