@@ -1,0 +1,20 @@
+{
+  "name":"DeSoto State Park",
+  "activities":[
+    {
+      "name":"Activity 1",
+      "filename":"notReal.json",
+      "type":"notReal"
+    },
+    {
+      "name":"Activity 2",
+      "filename":"notReal.json",
+      "type":"notReal"
+    },
+    {
+      "name":"Activity 3",
+      "filename":"notReal.json",
+      "type":"notReal"
+    }
+  ]
+}

@@ -40,11 +40,16 @@ public class MainActivity extends Activity implements ParkListener, ParkActivity
             fragmentManager.beginTransaction().add(R.id.activity_main, wordSearchFragment).commit();
             */
 
+            /*
             ParkFragment parkFragment = new ParkFragment();
             Bundle args = new Bundle();
             args.putString("activities", "test_park.json");
             parkFragment.setArguments(args);
             fragmentManager.beginTransaction().add(R.id.activity_main, parkFragment).commit();
+            */
+
+            MainMenuFragment mainMenuFragment = new MainMenuFragment();
+            fragmentManager.beginTransaction().add(R.id.activity_main, mainMenuFragment).commit();
         }
 
     }
@@ -59,7 +64,17 @@ public class MainActivity extends Activity implements ParkListener, ParkActivity
     }
 
     public void onParkSelectedListener(String parkFileName) {
-
+        //create new ParkFragment to put on screen
+        ParkFragment parkFragment = new ParkFragment();
+        //load the arguments bundle with the asset data file
+        Bundle arguments = new Bundle();
+        arguments.putString(getResources().getString(R.string.AssetBundleKey), parkFileName);
+        parkFragment.setArguments(arguments);
+        //put the fragment on the screen
+        fragmentManager.beginTransaction()
+                       .replace(R.id.activity_main, parkFragment)
+                       .addToBackStack(null)
+                       .commit();
     }
 
     public void onParkActivitySelectedListener(String fileName, String type) {
@@ -70,11 +85,17 @@ public class MainActivity extends Activity implements ParkListener, ParkActivity
             arguments.putString(getResources().getString(R.string.AssetBundleKey), fileName);
             trailWalkFragment.setArguments(arguments);
             //put the fragment on the screen
-            fragmentManager.beginTransaction().replace(R.id.activity_main, trailWalkFragment).addToBackStack(null).commit();
+            fragmentManager.beginTransaction()
+                           .replace(R.id.activity_main, trailWalkFragment)
+                           .addToBackStack(null)
+                           .commit();
         }
         else if (type.equals("wordsearch")) {
             WordSearchFragment wordSearchFragment = new WordSearchFragment();
-            fragmentManager.beginTransaction().replace(R.id.activity_main, wordSearchFragment).addToBackStack(null).commit();
+            fragmentManager.beginTransaction()
+                           .replace(R.id.activity_main, wordSearchFragment)
+                           .addToBackStack(null)
+                           .commit();
         }
         else {
             //do nothing
