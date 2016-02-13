@@ -1,0 +1,22 @@
+{
+  "array":[
+    {
+      "name":"Chewacla",
+      "file":"chewacla_data.json",
+      "lat":"32.552323",
+      "lon":"-85.476239"
+    },
+    {
+      "name":"DeSoto",
+      "file":"desoto_data.json",
+      "lat":"34.500747",
+      "lon":"-85.618586"
+    },
+    {
+      "name":"Cheaha",
+      "file":"cheaha_data.json",
+      "lat":"33.477154",
+      "lon":"-85.808433"
+    }
+  ]
+}

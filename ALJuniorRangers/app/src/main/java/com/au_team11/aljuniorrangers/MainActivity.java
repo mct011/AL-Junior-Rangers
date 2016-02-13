@@ -7,7 +7,7 @@ import android.util.Log;
 
 //testing the ability of branching and merging
 
-public class MainActivity extends Activity implements ParkActivityListener {
+public class MainActivity extends Activity implements ParkListener, ParkActivityListener {
 
     TrailWalkFragment trailWalkFragment = null;
 
@@ -67,7 +67,7 @@ public class MainActivity extends Activity implements ParkActivityListener {
         if (type.equals("trailwalk")) {
             trailWalkFragment = new TrailWalkFragment();
             Bundle arguments = new Bundle();
-            arguments.putString(getResources().getString(R.string.assetBundleKey), fileName);
+            arguments.putString(getResources().getString(R.string.AssetBundleKey), fileName);
             trailWalkFragment.setArguments(arguments);
             //put the fragment on the screen
             fragmentManager.beginTransaction().replace(R.id.activity_main, trailWalkFragment).addToBackStack(null).commit();

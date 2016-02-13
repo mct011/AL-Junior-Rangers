@@ -68,7 +68,7 @@ public class TrailWalkFragment extends Fragment {
         view = inflater.inflate(R.layout.trailwalk_layout, container, false);
 
         //create trailWalk object using filename stored in arguments bundle
-        trailWalk = createTrailWalk(getArguments().getString(getResources().getString(R.string.assetBundleKey)));
+        trailWalk = createTrailWalk(getArguments().getString(getResources().getString(R.string.AssetBundleKey)));
 
         //find the created trailWalkView
         trailWalkView = (TrailWalkView) view.findViewById(R.id.trailWalkView);
