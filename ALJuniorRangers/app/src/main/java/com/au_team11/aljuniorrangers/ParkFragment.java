@@ -75,11 +75,11 @@ public class ParkFragment extends Fragment {
 
         //Place Holder Elements till JSON is figured out
         //TODO JSON Stuff/possibly delimit string for different activities.
-        activitiesPopulation = populateSpinner(getArguments().getString("activities"));
+        activitiesPopulation = populateSpinner(getArguments().getString(getResources().getString(R.string.AssetBundleKey)));
         //extract values from JSONArray
         try {
             for (int i = 0; i < activitiesPopulation.length(); i++) {
-                categories.add(activitiesPopulation.getJSONObject(i).getString("activityName"));
+                categories.add(activitiesPopulation.getJSONObject(i).getString("name"));
             }
         }
         catch (JSONException e) {
@@ -163,7 +163,7 @@ public class ParkFragment extends Fragment {
         //parse JSONArray for activityname specified by spinner. Then get correct filename.
         try {
             for (int i = 0; i < activitiesPopulation.length(); i++) {
-                if (activityName.equals(activitiesPopulation.getJSONObject(i).getString("activityName"))) {
+                if (activityName.equals(activitiesPopulation.getJSONObject(i).getString("name"))) {
                     filename = activitiesPopulation.getJSONObject(i).getString("filename");
                     type = activitiesPopulation.getJSONObject(i).getString("type");
                 }

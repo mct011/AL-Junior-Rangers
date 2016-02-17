@@ -1,0 +1,20 @@
+{
+  "name":"Chewacla State Park",
+  "activities":[
+    {
+      "name":"Activity A",
+      "filename":"notReal.json",
+      "type":"notReal"
+    },
+    {
+      "name":"Activity B",
+      "filename":"notReal.json",
+      "type":"notReal"
+    },
+    {
+      "name":"Activity C",
+      "filename":"notReal.json",
+      "type":"notReal"
+    }
+  ]
+}
