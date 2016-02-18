@@ -8,18 +8,18 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.esri.android.map.MapView;
+import com.esri.android.map.event.OnStatusChangedListener;
 
 /**
  * Created by JDSS on 2/17/16.
  */
 public class TrailWalkFragmentArcGIS extends Fragment {
 
-    MapView mapView;
-
     Context context;
     View view;
+
+    MapView mapView;
 
     @Override
     public void onAttach(Activity activity) {
@@ -38,6 +38,16 @@ public class TrailWalkFragmentArcGIS extends Fragment {
         }
 
         view = inflater.inflate(R.layout.trailwalk_layout_arcgis, container, false);
+
+        mapView = (MapView) view.findViewById(R.id.map);
+        mapView.setOnStatusChangedListener(new OnStatusChangedListener() {
+            @Override
+            public void onStatusChanged(Object o, STATUS status) {
+                if (o == mapView && status == STATUS.INITIALIZED) {
+                    mapView.getLocationDisplayManager().start();
+                }
+            }
+        });
 
         return view;
     }
