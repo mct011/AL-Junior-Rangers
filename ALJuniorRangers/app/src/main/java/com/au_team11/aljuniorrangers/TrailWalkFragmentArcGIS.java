@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.esri.android.map.LocationDisplayManager;
 import com.esri.android.map.MapView;
+import com.esri.android.map.ags.ArcGISFeatureLayer;
 import com.esri.android.map.event.OnSingleTapListener;
 import com.esri.android.map.event.OnStatusChangedListener;
 import com.esri.android.map.popup.PopupContainer;
@@ -30,14 +31,19 @@ import com.esri.core.symbol.SimpleMarkerSymbol;
  */
 public class TrailWalkFragmentArcGIS extends Fragment {
 
-    public static final int MARKER_SIZE_DP = 8;
+    //how close a click must be to a point to trigger an action
     public static final float NEARBY_RADIUS_DP = 32;
 
     Context context;
-    int densityDpi;
-    int density_default;
+    //used in isNearOnScreen for calculating proximity
+    int pxPerDp;
 
     View view;
+
+    //used to test REST data requests
+    String featureServiceURL = "https://conservationgis.alabama.gov/adcnrweb/rest/services/StateParksSingle/MapServer/0";
+    ArcGISFeatureLayer featureLayer;
+
 
     //the map on screen
     MapView mapView;
@@ -51,8 +57,8 @@ public class TrailWalkFragmentArcGIS extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         context =  activity.getApplicationContext();
-        densityDpi = context.getResources().getDisplayMetrics().densityDpi;
-        density_default = context.getResources().getDisplayMetrics().DENSITY_DEFAULT;
+        pxPerDp =   context.getResources().getDisplayMetrics().densityDpi
+                  / context.getResources().getDisplayMetrics().DENSITY_DEFAULT;
     }
 
     @Nullable
@@ -88,6 +94,11 @@ public class TrailWalkFragmentArcGIS extends Fragment {
             }
         });
 
+        //add REST requested feature layer
+        featureLayer = new ArcGISFeatureLayer(featureServiceURL, ArcGISFeatureLayer.MODE.ONDEMAND);
+        mapView.addLayer(featureLayer);
+
+        //what to do when the user taps the screen at point x,y
         mapView.setOnSingleTapListener(new OnSingleTapListener() {
             @Override
             public void onSingleTap(float x, float y) {
@@ -133,8 +144,12 @@ public class TrailWalkFragmentArcGIS extends Fragment {
 
     //returns true if the two points are within a square with side length toleranceDP of each other
     public Boolean isNearOnScreen(Point point0, Point point1, float toleranceDP) {
+        //check that points are not null
+        if (point0 == null || point1 == null) {
+            return false;
+        }
         //get pixel value of tolerance
-        float tolerancePX = toleranceDP * (densityDpi / density_default);
+        float tolerancePX = toleranceDP * pxPerDp;
         //if the one of the points is outside the tolerance range, return false
         if ((point0.getX() >= (point1.getX() - tolerancePX)) &&
             (point0.getX() <= (point1.getX() + tolerancePX)) &&
