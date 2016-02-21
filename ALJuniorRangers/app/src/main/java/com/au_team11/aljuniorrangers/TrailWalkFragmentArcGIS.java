@@ -3,16 +3,10 @@ package com.au_team11.aljuniorrangers;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,7 +18,6 @@ import com.esri.android.map.event.OnStatusChangedListener;
 import com.esri.android.map.popup.PopupContainer;
 import com.esri.core.geometry.Point;
 import com.esri.core.geometry.SpatialReference;
-import com.esri.core.symbol.SimpleMarkerSymbol;
 
 /**
  * Created by JDSS on 2/17/16.
@@ -41,9 +34,10 @@ public class TrailWalkFragmentArcGIS extends Fragment {
     View view;
 
     //used to test REST data requests
-    String featureServiceURL = "https://conservationgis.alabama.gov/adcnrweb/rest/services/StateParksSingle/MapServer/0";
-    ArcGISFeatureLayer featureLayer;
-
+    String featureServiceURL0 = "https://conservationgis.alabama.gov/adcnrweb/rest/services/Trails_SLD/MapServer/2";
+    String featureServiceURL1 = "https://conservationgis.alabama.gov/adcnrweb/rest/services/Trails_SLD/MapServer/1";
+    ArcGISFeatureLayer featureLayer0;
+    ArcGISFeatureLayer featureLayer1;
 
     //the map on screen
     MapView mapView;
@@ -95,8 +89,10 @@ public class TrailWalkFragmentArcGIS extends Fragment {
         });
 
         //add REST requested feature layer
-        featureLayer = new ArcGISFeatureLayer(featureServiceURL, ArcGISFeatureLayer.MODE.ONDEMAND);
-        mapView.addLayer(featureLayer);
+        featureLayer0 = new ArcGISFeatureLayer(featureServiceURL0, ArcGISFeatureLayer.MODE.ONDEMAND);
+        featureLayer1 = new ArcGISFeatureLayer(featureServiceURL1, ArcGISFeatureLayer.MODE.ONDEMAND);
+        mapView.addLayer(featureLayer0);
+        mapView.addLayer(featureLayer1);
 
         //what to do when the user taps the screen at point x,y
         mapView.setOnSingleTapListener(new OnSingleTapListener() {
