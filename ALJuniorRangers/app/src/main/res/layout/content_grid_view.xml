@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/gridview"
+        android:id="@+id/word_search"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="500dp"
         android:columnWidth="60dp"
         android:numColumns="6"
         android:verticalSpacing="30dp"
         android:horizontalSpacing="0dp"
         android:stretchMode="columnWidth"
-        android:gravity="center"
-    />
+        android:gravity="center"/>
+
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/word_bank"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="60dp"
+        android:numColumns="2"
+        android:verticalSpacing="0dp"
+        android:horizontalSpacing="0dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"/>
+</LinearLayout>
