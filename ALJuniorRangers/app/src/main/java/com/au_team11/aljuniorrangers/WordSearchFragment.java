@@ -2,21 +2,18 @@ package com.au_team11.aljuniorrangers;
 
 import android.os.Bundle;
 import android.app.Fragment;
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 
 public class WordSearchFragment extends Fragment {
 
-    //private Activity fActivity;
-    //private LinearLayout lLayout;
-    private GridView gridView;
+    private GridView wordSearch;
+    private GridView wordBank;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -25,28 +22,18 @@ public class WordSearchFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.content_grid_view, container, false);
 
-        gridView = (GridView) view.findViewById(R.id.gridview);
+        wordSearch = (GridView) view.findViewById(R.id.word_search);
+        wordBank = (GridView) view.findViewById(R.id.word_bank);
 
-        /*
-        fActivity = (Activity) super.getActivity();
-        lLayout = (LinearLayout) inflater.inflate(R.layout.content_grid_view, container, false);
-
-        android.widget.GridView gridView = (android.widget.GridView) fActivity.findViewById(R.id.gridview);
-        */
-        gridView.setAdapter(new TextAdapter(super.getActivity()));
+        wordSearch.setAdapter(new WordSearchAdapter(super.getActivity()));
+        // TODO: Fix error with WordBankAdapter not converting to listAdapter.
+        // Change from WordSearchAdapter to WordBankAdapter after fixing.
+        wordBank.setAdapter(new WordSearchAdapter(super.getActivity()));
 
 
+        wordSearch.setOnItemClickListener(null);
+        wordBank.setOnItemClickListener(null);
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-//                Toast.makeText(WordSearchFragment.this, "" + position,
-//                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //lLayout.findViewById(gridView.getId());
-        //return lLayout;
         return view;
     }
 
