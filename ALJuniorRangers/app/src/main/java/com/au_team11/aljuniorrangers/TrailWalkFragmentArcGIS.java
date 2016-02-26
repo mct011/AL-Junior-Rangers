@@ -3,6 +3,7 @@ package com.au_team11.aljuniorrangers;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -10,14 +11,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.esri.android.map.GraphicsLayer;
 import com.esri.android.map.LocationDisplayManager;
 import com.esri.android.map.MapView;
 import com.esri.android.map.ags.ArcGISFeatureLayer;
 import com.esri.android.map.event.OnSingleTapListener;
 import com.esri.android.map.event.OnStatusChangedListener;
 import com.esri.android.map.popup.PopupContainer;
+import com.esri.core.geometry.GeometryEngine;
 import com.esri.core.geometry.Point;
 import com.esri.core.geometry.SpatialReference;
+import com.esri.core.map.Graphic;
+import com.esri.core.symbol.SimpleMarkerSymbol;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 
 /**
  * Created by JDSS on 2/17/16.
@@ -27,7 +40,9 @@ public class TrailWalkFragmentArcGIS extends Fragment {
     //how close a click must be to a point to trigger an action
     public static final float NEARBY_RADIUS_DP = 32;
 
+    //Parent Activity
     Context context;
+
     //used in isNearOnScreen for calculating proximity
     int pxPerDp;
 
@@ -46,6 +61,12 @@ public class TrailWalkFragmentArcGIS extends Fragment {
     LocationDisplayManager locationDisplayManager;
     //how the map is drawn
     SpatialReference spatialReference;
+
+    //trail data filename
+    String fileName;
+    //Points defined by the JSON file
+    ArrayList<ActionPoint> actionPoints;
+    GraphicsLayer graphicsLayer;
 
     @Override
     public void onAttach(Activity activity) {
@@ -84,6 +105,9 @@ public class TrailWalkFragmentArcGIS extends Fragment {
                     locationDisplayManager.setShowLocation(true);
                     //start location tracking
                     locationDisplayManager.start();
+
+                    Log.i("TWFAGIS", "mapView spatial reference is: " + mapView.getSpatialReference().getText());
+
                 }
             }
         });
@@ -94,15 +118,52 @@ public class TrailWalkFragmentArcGIS extends Fragment {
         mapView.addLayer(featureLayer0);
         mapView.addLayer(featureLayer1);
 
+        //initialize the GraphicsLayer
+        graphicsLayer = new GraphicsLayer();
+
+        //create the action points
+        //fileName = getArguments().getString(getResources().getString(R.string.AssetBundleKey));
+        //TODO: replace line below with line above in final version
+        fileName = "test_trail_arcgis.json";
+        String jsonData = loadJSONFromAsset(fileName);
+        actionPoints = createActionPoints(jsonData);
+        //add actionPoints to the graphics layer
+        for(int i = 0; i < actionPoints.size(); i++) {
+            graphicsLayer.addGraphic(
+                    new Graphic(
+                            actionPoints.get(i).getLocation(),
+                            new SimpleMarkerSymbol(
+                                    Color.RED,
+                                    10,
+                                    SimpleMarkerSymbol.STYLE.CIRCLE)));
+        }
+
+        //add the graphics layer to the map
+        mapView.addLayer(graphicsLayer);
+
         //what to do when the user taps the screen at point x,y
         mapView.setOnSingleTapListener(new OnSingleTapListener() {
             @Override
             public void onSingleTap(float x, float y) {
                 //location display manager can't be null for this
                 if (locationDisplayManager != null) {
-                    //if the current location on screen is near to the tap location on screen
+                    //if the user tapped their current location
                     if (isNearOnScreen(mapView.toScreenPoint(locationDisplayManager.getPoint()), new Point(x, y), NEARBY_RADIUS_DP)) {
                         Log.i("ArcGIS", "click is near current location");
+                    }
+                    //else if the user tapped any of the JSON defined points
+                    else {
+                        for (int i = 0; i < actionPoints.size(); i++) {
+                            if (isNearOnScreen(
+                                    mapView.toScreenPoint(
+                                            actionPoints.get(i).getLocation()),
+                                    new Point(x, y),
+                                    NEARBY_RADIUS_DP)) {
+                                //do the action
+                                actionPoints.get(i).action();
+                                Log.i("ArcGIS", "click is near point with index" + i);
+                            }
+                        }
                     }
                 }
             }
@@ -154,5 +215,49 @@ public class TrailWalkFragmentArcGIS extends Fragment {
             return true;
         else
             return false;
+    }
+
+    public ArrayList<ActionPoint> createActionPoints(String json) {
+        ArrayList<ActionPoint> newActionPoints = new ArrayList<ActionPoint>();
+        //credit goes to GrlsHu on StackOverflow
+        try {
+            //create new JSON Object
+            JSONObject jsonObject = new JSONObject(json);
+            //read the action point array from the object
+            JSONArray jsonArray = jsonObject.getJSONArray("actionpoints");
+
+            //fill newActionPoints with ActionPoints from the json data
+            for (int i = 0; i < jsonArray.length(); i++) {
+                //create new ActionPoint using Point generated from JSON file's lat/lon pair
+                newActionPoints.add(
+                        new ActionPoint(
+                                new Point(
+                                        jsonArray.getJSONObject(i).getDouble("longitude"),
+                                        jsonArray.getJSONObject(i).getDouble("latitude"))));
+            }
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return newActionPoints;
+    }
+
+    //credit goes to GrlsHu on StackOverflow
+    //returns a json string from the asset file
+    public String loadJSONFromAsset(String fileName) {
+        String json = null;
+        try {
+            InputStream is = getActivity().getAssets().open(fileName);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
     }
 }

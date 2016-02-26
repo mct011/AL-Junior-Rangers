@@ -1,0 +1,23 @@
+{
+  "name":"test trail arcgis",
+  "actionpoints":[
+    {
+      "latitude":"32.605799",
+      "longitude":"-85.487671",
+      "type":"picture",
+      "text":"Take a picture bruh."
+    },
+    {
+      "latitude":"32.605673",
+      "longitude":"-85.487493",
+      "type":"information",
+      "text":"This is some information brah."
+    },
+    {
+      "latitude":"32.6055568",
+      "longitude":"-85.487481",
+      "type":"information",
+      "text":"This is more information broheem."
+    }
+  ]
+}
