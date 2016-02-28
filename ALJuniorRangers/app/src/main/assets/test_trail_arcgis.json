@@ -2,20 +2,20 @@
   "name":"test trail arcgis",
   "actionpoints":[
     {
-      "latitude":"32.605799",
-      "longitude":"-85.487671",
+      "latitude":"10000",
+      "longitude":"-10000",
       "type":"picture",
-      "text":"Take a picture bruh."
+      "text":"Click to take a picture bruh."
     },
     {
-      "latitude":"32.605673",
-      "longitude":"-85.487493",
+      "latitude":"10000",
+      "longitude":"10000",
       "type":"information",
-      "text":"This is some information brah."
+      "text":"This is a lot of information brah, it might even take up too much of the screen breh, someone stop me before I got too far."
     },
     {
-      "latitude":"32.6055568",
-      "longitude":"-85.487481",
+      "latitude":"-10000",
+      "longitude":"10000",
       "type":"information",
       "text":"This is more information broheem."
     }

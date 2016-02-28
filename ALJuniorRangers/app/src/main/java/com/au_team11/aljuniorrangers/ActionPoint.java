@@ -1,5 +1,8 @@
 package com.au_team11.aljuniorrangers;
 
+import android.app.Activity;
+import android.util.Log;
+
 import com.esri.core.geometry.Point;
 
 /**
@@ -7,12 +10,22 @@ import com.esri.core.geometry.Point;
  */
 public class ActionPoint {
 
+    //main activity
+    Activity activity;
+
+    //text to display about point
+    String text;
+
     //Location on the map
     Point location;
 
-    public ActionPoint(Point newLocation) {
+    public ActionPoint(Activity newActivity, Point newLocation, String newText) {
+        //set the activity
+        activity = newActivity;
         //set the location
         location = newLocation;
+        //set the text
+        text = newText;
     }
 
     public Point getLocation() {
@@ -29,8 +42,16 @@ public class ActionPoint {
         }
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     //The action to do, defined in subclasses
     public void action() {
-        //do nothing
+        Log.i("ActionPoint.action", "ActionPoint was clicked");
     }
 }
